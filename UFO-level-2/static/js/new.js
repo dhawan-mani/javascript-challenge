@@ -18,13 +18,6 @@ tableData.forEach( function Level1(Ufo_Data){
 
 // Selecting the datetime element on the web page.
  
-    // var  City = d3.select("#myDropdown").select("a[0")
-
-    
-    
- 
-
-
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
@@ -51,81 +44,43 @@ function myFunction() {
   }
 
 
-var Filter_button = d3.select("filter list-group-item");
+var Filter_button = d3.select("#filters");
 var city_button = d3.select("#city");
 var country_button = d3.select("#country");
 var state_button = d3.select("#state");
 var shape_button = d3.select("#shape");
-function city_click(value){
-    // var e = d3.event.currentTarget.value;
-    let input = document.getElementById("city").innerText;
-
-       console.log(input)
-       
-    var label =Filter_button.append("label").text(`${input}`);
-  
-    var input_field = label.append("input");
-    var form = d3.select("#form-group");
-    form.append(input_field);
-
-};
-function country_click(value){
-  // var e = d3.event.currentTarget.value;
-  let input = document.getElementById("country").innerText;
-
-     console.log(input)
-     
-  var label =Filter_button.append("label").text(`${input}`);
-
-  var input_field = label.append("input");
-  var form = d3.select("#form-group");
-  form.append(input_field);
-
-};
-function state_click(value){
-  // var e = d3.event.currentTarget.value;
-  let input = document.getElementById("state").innerText;
-
-     console.log(input)
-     
-  var label =Filter_button.append("label").text(`${input}`);
-
-  var input_field = label.append("input");
-  var form = d3.select("#form-group");
-  form.append(input_field);
-
-};
-
-function shape_click(value){
-  // var e = d3.event.currentTarget.value;
-  let input = document.getElementById("shape").innerText;
-
-     console.log(input)
-     
-//   var label =Filter_button.append("label").text(`${input}`);
-
- var label = Filter_button.html("<label for="shape">`${input}`</label>");
-
-  var input_field = label.append("input");
-  var form = d3.select("#form-group");
-  form.append(input_field);
-
-};
-
-city_button.on("click",city_click);
-country_button.on("click",country_click);
-state_button.on("click",state_click);
-shape_button.on("click",shape_click);
-
-
-var date = d3.select("#datetime")
-
 function handlechange(value) {
-  // Getting the value of input field.        
-      var input = d3.event.target.value
-     
-  
-      var filtered_data = tableData.filter(Ufo_Data => Ufo_Data.datetime === input);
+  // Getting the value of input field. 
+    //console.log(value);
+    //console.log(d3.event.target); 
+    console.log(this.value);  
+    // console.log(type);      
+    var input = d3.event.target.value;
+    //console.log(input);
+    target_id = d3.event.target.id;
+    console.log(target_id);
+    var filtered_data =tableData.filter(Ufo_Data =>  
+      {
+        if (Ufo_Data.datetime === input && target_id == "datetime" ){
+        return Ufo_Data.datetime ;
+        }
+       if (Ufo_Data.city === input && target_id=="city_input") 
+       {
+        return Ufo_Data.city 
+      } 
+       if (Ufo_Data.state === input &&  target_id == "state_input") {
+         return Ufo_Data.state;
+      }  
+      if (Ufo_Data.country === input && target_id== "country_input") {
+        return Ufo_Data.country;
+      }
+      if(Ufo_Data.shape === input &&  target_id== "shape_input") {
+          return Ufo_Data.shape
+      }
+       
+      });
+        
+      // var filtered_data = tableData.filter(Ufo_Data => Ufo_Data.city === input)
           console.log(filtered_data)
           console.log(input)
           tbody = d3.selectAll("td")
@@ -142,25 +97,98 @@ function handlechange(value) {
           });
   
       };
-  date.on("change",handlechange)
-  city_button.on("change",handlechange)
-    state_button.on("change",handlechange)
-    country_button.on("change",handlechange)
-    shape_button.on("change",handlechange)
+
+
+function city_click(value){
+    // var e = d3.event.currentTarget.value;
+    let input = document.getElementById("city").innerText;
+    console.log(input);
+    var label =Filter_button.append("label").text(`${input}`);
+    var input_field = label.append("input")
+    input_field.attr("id", "city_input")
+    var form = d3.select("#form-group");
+    form.append(label);
+    form.append(input_field);
+  
+    input_field.on("change",handlechange)
+   
+  
+ 
+};
+function country_click(value){
+  // var e = d3.event.currentTarget.value;
+  let input = document.getElementById("country").innerText;
+
+     console.log(input)
+     
+  var label =Filter_button.append("label").text(`${input}`);
+
+  var input_field = label.append("input");
+  input_field.attr("id", "country_input")
+  var form = d3.select("#form-group");
+  form.append(input_field);
+  input_field.on("change",handlechange)
+  // input_field.attr("onChange" , {handlechange})
+
+};
+function state_click(value){
+  // var e = d3.event.currentTarget.value;
+  let input = document.getElementById("state").innerText;
+
+     console.log(input)
+     
+  var label =Filter_button.append("label").text(`${input}`);
+
+  var input_field = label.append("input");
+  input_field.attr("id", "state_input")
+  var form = d3.select("#form-group");
+  form.append(input_field);
+  input_field.on("change",handlechange)
+  // input_field.attr("onChange" , {handlechange})
+
+
+};
+
+function shape_click(value){
+  // var e = d3.event.currentTarget.value;
+  let input = document.getElementById("shape").innerText;
+
+     console.log(input)
+     
+  var label =Filter_button.append("label").text(`${input}`);
+
+  var input_field = label.append("input");
+  input_field.attr("id", "shape_input")
+  var form = d3.select("#form-group");
+  form.append(input_field);
+  input_field.on("change",handlechange)
+  // input_field.attr("onChange" , {handlechange})
+
+
+};
+
+city_button.on("click",city_click);
+country_button.on("click",country_click);
+state_button.on("click",state_click);
+shape_button.on("click",shape_click);
+
+
+var date = d3.select("#datetime")
+
+
+    date.on("change",handlechange)
+    // state_button.on("change",handlechange)
+    // country_button.on("change",handlechange)
+    // shape_button.on("change",handlechange)
 
 
 
 
-
-
+  //   document.querySelectorAll('#datetime,#city_input,#state_input,#country_input,#shape_input').forEach(element => {
+  //     element.addEventListener('keyup',handlechange , false);
+  // });
 
 
 // city_input.on("click",Dropdown_filter);
-
-
-// var country_label = Filter_button.append("li").append("label").text("country");
-// var country_input = country_label.append("input");
-// var form = d3.select("#form-group")
-// form.append(country_input);
-
-
+country_field = document.getElementById("country_input").innerText;
+// console.log(country_field)

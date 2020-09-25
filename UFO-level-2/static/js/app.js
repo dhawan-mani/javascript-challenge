@@ -54,20 +54,25 @@ function handlechange(value) {
       var input = d3.event.target.value
      
   
-      // var filtered_data =tableData.filter(Ufo_Data =>  {if (Ufo_Data.datetime === input){
-      //   return Ufo_Data.datetime }
-      //  else if (Ufo_Data.city === input) {
-      //    return Ufo_Data.city } 
-      //    else if (Ufo_Data.state === input) {
-      //    return Ufo_Data.state }  
-      //    else if (Ufo_Data.country === input) {
-      //      return Ufo_Data.country
-      //    }
-      //   else if(Ufo_Data.shape === input) {
-      //     return Ufo_Data.shape
-      //   }});
-
-      var filtered_data = tableData.filter(Ufo_Data => Ufo_Data.city === input)
+      var filtered_data =tableData.filter(Ufo_Data =>  {if (Ufo_Data.datetime === input){
+        return Ufo_Data.datetime }
+       if (Ufo_Data.city === input) {
+        return Ufo_Data.city } 
+       if (Ufo_Data.state === input) {
+         return Ufo_Data.state }  
+         if (Ufo_Data.country === input) {
+           return Ufo_Data.country
+           console.log(input) 
+          console.log("-----------------------------")
+         }
+        if(Ufo_Data.shape === input) {
+          return Ufo_Data.shape
+        }
+        country_field = d3.select("#country_input").value
+        
+      });
+        
+      // var filtered_data = tableData.filter(Ufo_Data => Ufo_Data.city === input)
           console.log(filtered_data)
           console.log(input)
           tbody = d3.selectAll("td")
