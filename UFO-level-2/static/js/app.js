@@ -52,24 +52,23 @@ var shape_button = d3.select("#shape");
 function handlechange(value) {
   // Getting the value of input field.        
       var input = d3.event.target.value
-     
+      target_id = d3.event.target.id;
+      console.log(target_id);
   
-      var filtered_data =tableData.filter(Ufo_Data =>  {if (Ufo_Data.datetime === input){
-        return Ufo_Data.datetime }
-       if (Ufo_Data.city === input) {
-        return Ufo_Data.city } 
-       if (Ufo_Data.state === input) {
-         return Ufo_Data.state }  
-         if (Ufo_Data.country === input) {
-           return Ufo_Data.country
-           console.log(input) 
-          console.log("-----------------------------")
+      var filtered_data =tableData.filter(Ufo_Data =>  {
+        if (Ufo_Data.datetime === input && target_id == "datetime"){
+        return Ufo_Data.datetime;}
+       if (Ufo_Data.city === input && target_id=="city_input") {
+        return Ufo_Data.city ;} 
+       if (Ufo_Data.state === input &&  target_id == "state_input") {
+         return Ufo_Data.state; }  
+         if (Ufo_Data.country === input && target_id== "country_input") {
+           return Ufo_Data.country;
          }
-        if(Ufo_Data.shape === input) {
-          return Ufo_Data.shape
+        if(Ufo_Data.shape === input &&  target_id== "shape_input") {
+          return Ufo_Data.shape;
         }
-        country_field = d3.select("#country_input").value
-        
+        // country_field = d3.select("#country_input").value
       });
         
       // var filtered_data = tableData.filter(Ufo_Data => Ufo_Data.city === input)

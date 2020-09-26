@@ -150,11 +150,11 @@ select {
     display: none;
   }
 
-  #table-area tr td:first-child {
+   #table-area tr td:first-child {
     font-size: 1.8em;
     font-weight: bold;
-    background: #1b3146;
-  }
+    background: #1b3146; 
+  } 
 
   #table-area tr td:last-child {
     margin-bottom: 20px;

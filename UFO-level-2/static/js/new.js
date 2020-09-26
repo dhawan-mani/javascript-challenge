@@ -4,6 +4,7 @@ var tableData = data;
 
 // selected the table
 var table = d3.select("#ufo-table")
+table.attr("class", "table table-bordered table-dark")
 
 // Inserting the data in data.js in the tables inside the web page.
 
@@ -49,54 +50,88 @@ var city_button = d3.select("#city");
 var country_button = d3.select("#country");
 var state_button = d3.select("#state");
 var shape_button = d3.select("#shape");
+
 function handlechange(value) {
-  // Getting the value of input field. 
-    //console.log(value);
-    //console.log(d3.event.target); 
-    console.log(this.value);  
-    // console.log(type);      
-    var input = d3.event.target.value;
-    //console.log(input);
-    target_id = d3.event.target.id;
-    console.log(target_id);
-    var filtered_data =tableData.filter(Ufo_Data =>  
-      {
-        if (Ufo_Data.datetime === input && target_id == "datetime" ){
-        return Ufo_Data.datetime ;
+  // Getting the value of input field.       
+    var input = d3.event.target.value.toLowerCase();
+    is_city_applied = false;
+    is_country_applied = false;
+    is_state_applied = false;
+    is_shape_applied = false;
+    // find if the filters are set by user
+    // we check for NULL because inputs are created dynamically
+    city_input = document.getElementById("city_input");
+    country_input = document.getElementById("country_input");
+    state_input = document.getElementById("state_input");
+    shape_input = document.getElementById("shape_input");
+    date_filter = document.getElementById("datetime").value;
+    is_date_applied = date_filter != "";
+    if(city_input != null) {
+      city_filter = city_input.value;
+      is_city_applied = city_filter != "";
+    }
+    if(country_input != null) {
+      country_filter = country_input.value;
+      is_country_applied = country_filter != "";
+    }
+    if (state_input != null) {
+      state_filter = state_input.value;
+      is_state_applied = state_filter != "";
+    }
+    if (shape_input != null) {
+      shape_filter = shape_input.value;
+      is_shape_applied = shape_filter != "";
+    }
+    // start filtering
+    filtered_data = tableData;
+    if(is_city_applied) {
+      filtered_data= filtered_data.filter(row => {
+        if (row.city == city_filter) {
+          return row;
         }
-       if (Ufo_Data.city === input && target_id=="city_input") 
-       {
-        return Ufo_Data.city 
-      } 
-       if (Ufo_Data.state === input &&  target_id == "state_input") {
-         return Ufo_Data.state;
-      }  
-      if (Ufo_Data.country === input && target_id== "country_input") {
-        return Ufo_Data.country;
-      }
-      if(Ufo_Data.shape === input &&  target_id== "shape_input") {
-          return Ufo_Data.shape
-      }
-       
       });
-        
-      // var filtered_data = tableData.filter(Ufo_Data => Ufo_Data.city === input)
-          console.log(filtered_data)
-          console.log(input)
-          tbody = d3.selectAll("td")
-  // Remove any children from the table data
-          tbody.html("");
-  // Appending the filtered data to the table
-          filtered_data.forEach( function Updated(Data){
-              var trow = table.append("tr");
-              Object.entries(Data).forEach(([key,value]) =>
-                  {
-                  var cell = trow.append("td")
-                  cell.text(value)
-                  });
+    }
+    if(is_country_applied) {
+      filtered_data= filtered_data.filter(row => {
+        if (row.country == country_filter) {
+          return row;
+        }
+      });
+    }
+    if(is_state_applied) {
+      filtered_data= filtered_data.filter(row => {
+        if (row.state == state_filter) {
+          return row;
+        }
+      });      
+    }
+    if(is_shape_applied) {
+      filtered_data= filtered_data.filter(row => {
+        if (row.shape == shape_filter) {
+          return row;
+        }
+      });      
+    }
+    if(is_date_applied) {
+      filtered_data= filtered_data.filter(row => {
+        if (row.datetime == date_filter) {
+          return row;
+        }
+      });      
+    }
+    tbody = d3.selectAll("td")
+    // Remove any children from the table data
+    tbody.html("");
+    // Appending the filtered data to the table
+    filtered_data.forEach( function Updated(Data){
+      var trow = table.append("tr");
+      Object.entries(Data).forEach(([key,value]) =>
+          {
+          var cell = trow.append("td")
+          cell.text(value)
           });
-  
-      };
+    });
+};
 
 
 function city_click(value){
@@ -106,14 +141,12 @@ function city_click(value){
     var label =Filter_button.append("label").text(`${input}`);
     var input_field = label.append("input")
     input_field.attr("id", "city_input")
+    input_field.attr("type", "text");
     var form = d3.select("#form-group");
     form.append(label);
     form.append(input_field);
   
-    input_field.on("change",handlechange)
-   
-  
- 
+    input_field.on("change",handlechange);
 };
 function country_click(value){
   // var e = d3.event.currentTarget.value;
@@ -125,6 +158,8 @@ function country_click(value){
 
   var input_field = label.append("input");
   input_field.attr("id", "country_input")
+  input_field.attr("type", "text");
+  input_field.attr("placeholder", "us")
   var form = d3.select("#form-group");
   form.append(input_field);
   input_field.on("change",handlechange)
@@ -139,8 +174,10 @@ function state_click(value){
      
   var label =Filter_button.append("label").text(`${input}`);
 
-  var input_field = label.append("input");
+  var input_field = label.append("input")
   input_field.attr("id", "state_input")
+  input_field.attr("type", "text")
+  input_field.attr("placeholder", "ca")
   var form = d3.select("#form-group");
   form.append(input_field);
   input_field.on("change",handlechange)
@@ -159,12 +196,11 @@ function shape_click(value){
 
   var input_field = label.append("input");
   input_field.attr("id", "shape_input")
+  input_field.attr("type", "text")
+  input_field.attr("placeholder", "circle")
   var form = d3.select("#form-group");
   form.append(input_field);
-  input_field.on("change",handlechange)
-  // input_field.attr("onChange" , {handlechange})
-
-
+  input_field.on("change",handlechange);
 };
 
 city_button.on("click",city_click);
@@ -172,23 +208,5 @@ country_button.on("click",country_click);
 state_button.on("click",state_click);
 shape_button.on("click",shape_click);
 
-
 var date = d3.select("#datetime")
-
-
-    date.on("change",handlechange)
-    // state_button.on("change",handlechange)
-    // country_button.on("change",handlechange)
-    // shape_button.on("change",handlechange)
-
-
-
-
-  //   document.querySelectorAll('#datetime,#city_input,#state_input,#country_input,#shape_input').forEach(element => {
-  //     element.addEventListener('keyup',handlechange , false);
-  // });
-
-
-// city_input.on("click",Dropdown_filter);
-country_field = document.getElementById("country_input").innerText;
-// console.log(country_field)
+date.on("change",handlechange)
