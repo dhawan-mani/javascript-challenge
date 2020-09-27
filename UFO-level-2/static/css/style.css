@@ -138,8 +138,8 @@ select {
   color: #8e979f;
 }
 
-/* media queries which will only be activated at specific screen sizes */
-@media (max-width: 800px) {
+ media queries which will only be activated at specific screen sizes */
+ @media (max-width: 800px) {
   #table-area td {
     font-size: 1em;
   }
@@ -148,13 +148,13 @@ select {
 @media (max-width: 500px) {
   #table-area thead {
     display: none;
-  }
+  } */
 
    #table-area tr td:first-child {
     font-size: 1.8em;
     font-weight: bold;
     background: #1b3146; 
-  } 
+  }  
 
   #table-area tr td:last-child {
     margin-bottom: 20px;
@@ -167,13 +167,13 @@ select {
     margin-top: 20px;
     content: " ";
     background: aliceblue;
-  }
+  } */
 
-  #table-area td {
+   #table-area td {
     font-size: 1.25em;
-  }
+  } 
 
-  #table-area tbody td {
+   #table-area tbody td {
     display: block;
     text-align: center;
   }
@@ -184,7 +184,7 @@ select {
     font-weight: bold;
     text-align: center;
     content: attr(data-th);
-  }
+  } 
 
   .hero h1 {
     animation: smaller-title 1.2s forwards linear;

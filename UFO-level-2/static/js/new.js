@@ -131,6 +131,7 @@ function handlechange(value) {
           cell.text(value)
           });
     });
+    
 };
 
 
@@ -210,3 +211,7 @@ shape_button.on("click",shape_click);
 
 var date = d3.select("#datetime")
 date.on("change",handlechange)
+
+
+
+

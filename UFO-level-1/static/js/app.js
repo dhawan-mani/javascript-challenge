@@ -16,14 +16,28 @@ tableData.forEach( function Level1(Ufo_Data){
     });
 
 // Selecting the datetime element on the web page.
-    var date = d3.select("#datetime")
-    
-    function handlechange(value) {
-// Getting the value of input field.        
-    var input = d3.event.target.value
-   
+    var filter_button = d3.select("#filter-btn")
 
-    var filtered_data = tableData.filter(Ufo_Data => Ufo_Data.datetime === input);
+    function handlechange() {
+// Getting the value of input field.
+    event.preventDefault();        
+    // var input = d3.event.target.value
+    var input = document.getElementById("datetime").value;
+    console.log(input);
+    //input = input.replace();
+    input_date = new Date(input);
+    search_date = input_date.getYear() + "/" + input_date.getMonth() + "/" + input_date.getDate();
+    console.log(search_date);
+    console.log("*****");
+    var filtered_data = tableData.filter(Ufo_Data =>  {
+        //console.log(Ufo_Data.datetime);
+        var d2 = (new Date(Ufo_Data.datetime).getDate());
+        console.log(d2);
+        // if(d1 == d2) {
+        //     console.log("TRUEEEEE");
+        // }
+        return d1 === d2;
+    });
         console.log(filtered_data)
         tbody = d3.selectAll("td")
 // Remove any children from the table data
@@ -39,8 +53,8 @@ tableData.forEach( function Level1(Ufo_Data){
         });
 
     };
-      
+    // Adding event listener to the filter table 
+     filter_button.on("click",handlechange)
 
 
-    date.on("change",handlechange)
     
