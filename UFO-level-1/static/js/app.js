@@ -19,25 +19,22 @@ tableData.forEach( function Level1(Ufo_Data){
     var filter_button = d3.select("#filter-btn")
 
     function handlechange() {
-// Getting the value of input field.
-    event.preventDefault();        
-    // var input = d3.event.target.value
+        event.preventDefault();     
+    // Getting the value of input field.       
     var input = document.getElementById("datetime").value;
     console.log(input);
-    //input = input.replace();
-    input_date = new Date(input);
-    search_date = input_date.getYear() + "/" + input_date.getMonth() + "/" + input_date.getDate();
-    console.log(search_date);
-    console.log("*****");
-    var filtered_data = tableData.filter(Ufo_Data =>  {
-        //console.log(Ufo_Data.datetime);
-        var d2 = (new Date(Ufo_Data.datetime).getDate());
-        console.log(d2);
-        // if(d1 == d2) {
-        //     console.log("TRUEEEEE");
-        // }
-        return d1 === d2;
+ 
+    var filtered_data = tableData.filter(Ufo_Data => {
+        // Return whole tablle if there is no filter
+        if (input == "") {                        
+            return Ufo_Data.datetime;
+        }
+        // Return the table with filter applied.
+        if (Ufo_Data.datetime == input)
+            return Ufo_Data.datetime;
     });
+
+
         console.log(filtered_data)
         tbody = d3.selectAll("td")
 // Remove any children from the table data
@@ -53,6 +50,7 @@ tableData.forEach( function Level1(Ufo_Data){
         });
 
     };
+    
     // Adding event listener to the filter table 
      filter_button.on("click",handlechange)
 
