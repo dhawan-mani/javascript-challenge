@@ -51,64 +51,64 @@ var country_button = d3.select("#country");
 var state_button = d3.select("#state");
 var shape_button = d3.select("#shape");
 
-function handlechange(value) {
-  // Getting the value of input field.       
-    var input = d3.event.target.value.toLowerCase();
+function handlechange(value) {  
 
     is_city_applied = false;
     is_country_applied = false;
     is_state_applied = false;
     is_shape_applied = false;
-    // find if the filters are set by user
-    // we check for NULL because inputs are created dynamically
+ 
+      // Getting the value of input fields.     
     city_input = document.getElementById("city_input");
     country_input = document.getElementById("country_input");
     state_input = document.getElementById("state_input");
     shape_input = document.getElementById("shape_input");
     date_filter = document.getElementById("datetime").value;
     is_date_applied = date_filter != "";
+     // find if the filters are set by user
+    // we check for NULL because inputs are created dynamically
     if(city_input != null) {
-      city_filter = city_input.value;
+      city_filter = city_input.value.toLowerCase();
       is_city_applied = city_filter != "";
     }
     if(country_input != null) {
-      country_filter = country_input.value;
+      country_filter = country_input.value.toLowerCase();
       is_country_applied = country_filter != "";
     }
     if (state_input != null) {
-      state_filter = state_input.value;
+      state_filter = state_input.value.toLowerCase();
       is_state_applied = state_filter != "";
     }
     if (shape_input != null) {
-      shape_filter = shape_input.value;
+      shape_filter = shape_input.value.toLowerCase();
       is_shape_applied = shape_filter != "";
     }
     // start filtering
     filtered_data = tableData;
     if(is_city_applied) {
       filtered_data= filtered_data.filter(row => {
-        if (row.city == city_filter) {
+        if (row.city.toLowerCase() == city_filter) {
           return row;
         }
       });
     }
     if(is_country_applied) {
       filtered_data= filtered_data.filter(row => {
-        if (row.country == country_filter) {
+        if (row.country.toLowerCase() == country_filter) {
           return row;
         }
       });
     }
     if(is_state_applied) {
       filtered_data= filtered_data.filter(row => {
-        if (row.state == state_filter) {
+        if (row.state.toLowerCase() == state_filter) {
           return row;
         }
       });      
     }
     if(is_shape_applied) {
       filtered_data= filtered_data.filter(row => {
-        if (row.shape == shape_filter) {
+        if (row.shape.toLowerCase() == shape_filter) {
           return row;
         }
       });      
@@ -135,77 +135,70 @@ function handlechange(value) {
     
 };
 
-
+// Adding event listeners to the dropdowns 
 function city_click(value){
-    // var e = d3.event.currentTarget.value;
     let input = document.getElementById("city").innerText;
     console.log(input);
+// Adding the labels and input field to the form on click of the item in dropdown menu.
     var label =Filter_button.append("label").text(`${input}`);
     var input_field = label.append("input")
+// Adding attributes to the input field.
     input_field.attr("id", "city_input")
     input_field.attr("type", "text")
     input_field.attr("placeholder", "san diego")
     var form = d3.select("#form-group");
     form.append(label);
     form.append(input_field);
-  
+// Calling the function after change in the input field. 
     input_field.on("change",handlechange);
 };
 function country_click(value){
-  // var e = d3.event.currentTarget.value;
   let input = document.getElementById("country").innerText;
-
-     console.log(input)
-     
+  console.log(input)
+// Adding the labels and input field to the form on click of the item in dropdown menu.
   var label =Filter_button.append("label").text(`${input}`);
-
   var input_field = label.append("input");
+// Adding attributes to the input field.
   input_field.attr("id", "country_input")
   input_field.attr("type", "text");
   input_field.attr("placeholder", "us")
   var form = d3.select("#form-group");
   form.append(input_field);
+
+  // Calling the function after change in the input field.
   input_field.on("change",handlechange)
-  // input_field.attr("onChange" , {handlechange})
 
 };
 function state_click(value){
   // var e = d3.event.currentTarget.value;
   let input = document.getElementById("state").innerText;
-
-     console.log(input)
+  console.log(input)
      
   var label =Filter_button.append("label").text(`${input}`);
-
   var input_field = label.append("input")
   input_field.attr("id", "state_input")
   input_field.attr("type", "text")
   input_field.attr("placeholder", "ca")
   var form = d3.select("#form-group");
   form.append(input_field);
+
   input_field.on("change",handlechange)
-  // input_field.attr("onChange" , {handlechange})
-
-
 };
 
 function shape_click(value){
-  // var e = d3.event.currentTarget.value;
   let input = document.getElementById("shape").innerText;
-
-     console.log(input)
-     
+     console.log(input) 
   var label =Filter_button.append("label").text(`${input}`);
-
   var input_field = label.append("input");
   input_field.attr("id", "shape_input")
   input_field.attr("type", "text")
   input_field.attr("placeholder", "circle")
   var form = d3.select("#form-group");
   form.append(input_field);
+  
   input_field.on("change",handlechange);
 };
-
+// Calling the event listeners
 city_button.on("click",city_click);
 country_button.on("click",country_click);
 state_button.on("click",state_click);
